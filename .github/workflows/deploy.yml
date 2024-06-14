@@ -17,7 +17,7 @@ jobs:
         run: |
           aws cloudformation deploy \
             --stack-name NomeDaSuaStack \
-            --template-file ECSSG/cf.yaml \
+            --template-file cf.yaml \
             --capabilities CAPABILITY_IAM \
             --parameter-overrides \
               GitHubRepository=https://github.com/RuanGalvao/ECSSG \
