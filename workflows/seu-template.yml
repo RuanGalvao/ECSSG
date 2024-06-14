@@ -11,17 +11,18 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v4
 
       - name: Deploy CloudFormation stack
-        run: |
-          aws cloudformation deploy \
-            --stack-name NomeDaSuaStack \
-            --template-file seu-template.yaml \
-            --capabilities CAPABILITY_IAM \
-            --parameter-overrides \
-              GitHubRepository=https://github.com/RuanGalvao/ECSSG \
-              GitHubBranch=main \
+        run:
+            aws cloudformation deploy \
+              --stack-name NomeDaSuaStack \
+              --template-file seu-template.yaml \
+              --capabilities CAPABILITY_IAM \
+              --parameter-overrides \
+                GitHubRepository=https://github.com/RuanGalvao/ECSSG \
+                GitHubBranch=main
+
         shell: /usr/bin/bash -e {0}
 
         env:
