@@ -6,9 +6,9 @@ on:
       - main
 
 jobs:
+  secrets: inherit
   deploy:
     runs-on: ubuntu-latest
-    secrets: inherit
 
     steps:
       - name: Checkout code
