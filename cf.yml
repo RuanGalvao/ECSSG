@@ -11,6 +11,7 @@ Parameters:
   GitHubToken:
     Type: String
     Description: Token de acesso pessoal do GitHub para autenticação
+    default: teste
 
 Resources:
   PipelineRole:
