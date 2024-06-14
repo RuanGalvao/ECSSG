@@ -63,7 +63,7 @@ Resources:
                 Category: Source
                 Owner: AWS
                 Provider: GitHub
-                Version: 1
+                Version: 2
               OutputArtifacts:
                 - Name: SourceOutput
               Configuration:
