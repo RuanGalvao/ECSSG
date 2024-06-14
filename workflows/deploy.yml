@@ -20,7 +20,7 @@ jobs:
             --template-file seu-template.yaml \
             --capabilities CAPABILITY_IAM \
             --parameter-overrides \
-              GitHubRepository=https://github.com/RuanGalvao/ECSSG \
+              GitHubRepository=https://github.com/RuanGalvao/ECSSG/workflows \
               GitHubBranch=main \
               GitHubToken= ${{ secrets.GITHUB_TOKEN }} \
         env:
