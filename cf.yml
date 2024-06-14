@@ -61,7 +61,7 @@ Resources:
             - Name: SourceAction
               ActionTypeId:
                 Category: Source
-                Owner: ThirdParty
+                Owner: AWS
                 Provider: GitHub
                 Version: 1
               OutputArtifacts:
