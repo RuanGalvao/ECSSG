@@ -22,7 +22,7 @@ jobs:
             --parameter-overrides \
               GitHubRepository=https://github.com/RuanGalvao/ECSSG \
               GitHubBranch=main
-              GitHubToken= ${{ secrets.GITHUB_TOKEN }}
+              GH_ACCESS_TOKEN= ${{ secrets.GH_ACCESS_TOKEN }}
 
         shell: /usr/bin/bash -e {0}
         env:
