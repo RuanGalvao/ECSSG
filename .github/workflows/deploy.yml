@@ -25,14 +25,14 @@ jobs:
           aws-region: us-east-1
 
       - name: Deploy CloudFormation stack
-        run:
+        run: |
           aws cloudformation deploy \
             --stack-name NomeDaSuaStack \
             --template-file cf.yml \
             --capabilities CAPABILITY_IAM \
             --parameter-overrides \
               GitHubRepository=https://github.com/RuanGalvao/ECSSG \
-              GitHubBranch=main
+              GitHubBranch=main \
               GitHubAccessToken=${{ secrets.GH_ACCESS_TOKEN }}
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
