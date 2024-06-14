@@ -14,20 +14,19 @@ jobs:
         uses: actions/checkout@v4
 
       - name: Deploy CloudFormation stack
-        run:
-            aws cloudformation deploy \
-              --stack-name NomeDaSuaStack \
-              --template-file cf.yaml \
-              --capabilities CAPABILITY_IAM \
-              --parameter-overrides \
-                GitHubRepository=https://github.com/RuanGalvao/ECSSG \
-                GitHubBranch=main
-
+        run: |
+          aws cloudformation deploy \
+            --stack-name NomeDaSuaStack \
+            --template-file cf.yaml \
+            --capabilities CAPABILITY_IAM \
+            --parameter-overrides \
+              GitHubRepository=https://github.com/RuanGalvao/ECSSG \
+              GitHubBranch=main
         shell: /usr/bin/bash -e {0}
-
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_REGION: us-east-1
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GitHubToken: ${{ secrets.GITHUB_TOKEN }}
+
 
