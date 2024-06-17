@@ -60,15 +60,16 @@ Resources:
           Actions:
             - Name: SourceAction
               ActionTypeId:
-              Category: Source
-              Owner: AWS
-              Provider: CodeStarSourceConnection
-              Version: 1
+                Category: Source
+                Owner: AWS
+                Provider: CodeStarSourceConnection
+                Version: 1
               OutputArtifacts:
                 - Name: SourceOutput
               Configuration:
-                Repo: !Ref GitHubRepository
-                Branch: !Ref GitHubBranch
+                ConnectionArn: !Ref GitHubConnection  # Referência para a conexão CodeStar com GitHub
+                FullRepositoryId: !Ref GitHubRepository  # URL do repositório do GitHub
+                BranchName: !Ref GitHubBranch  # Branch do GitHub
               RunOrder: 1
         - Name: Build
           Actions:
@@ -83,6 +84,15 @@ Resources:
               Configuration:
                 ProjectName: !Ref CodeBuildProject
               RunOrder: 1
+
+  GitHubConnection:
+    Type: AWS::CodeStar::Connection
+    Properties:
+      ConnectionName: GitHubConnection
+      ProviderType: GitHub
+      OwnerAccountId: !Ref AWS::AccountId
+      ProviderEndpoint: github.com
+      UserOAuthToken: !Ref GitHubAccessToken
 
   CodeBuildProject:
     Type: AWS::CodeBuild::Project
