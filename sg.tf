@@ -9,7 +9,7 @@ resource "aws_security_group" "examplesg" {
 
   tags = {
     Name = "teste"
-    Environment = "teste2"
+    Environment = "teste1"
   }
 }
 
