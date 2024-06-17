@@ -69,6 +69,7 @@ Resources:
               Configuration:
                 Repo: !Ref GitHubRepository
                 Branch: !Ref GitHubBranch
+                OAuthToken: !Ref GitHubAccessToken
               RunOrder: 1
         - Name: Build
           Actions:
