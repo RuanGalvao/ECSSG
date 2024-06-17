@@ -62,7 +62,7 @@ Resources:
               ActionTypeId:
                 Category: Source
                 Owner: AWS
-                Provider: CodeStarSourceConnection
+                Provider: Github
                 Version: 1
               OutputArtifacts:
                 - Name: SourceOutput
