@@ -60,16 +60,15 @@ Resources:
           Actions:
             - Name: SourceAction
               ActionTypeId:
-                Category: Source
-                Owner: AWS
-                Provider: Github
-                Version: 1
+              Category: Source
+              Owner: AWS
+              Provider: CodeStarSourceConnection
+              Version: 1
               OutputArtifacts:
                 - Name: SourceOutput
               Configuration:
                 Repo: !Ref GitHubRepository
                 Branch: !Ref GitHubBranch
-                OAuthToken: !Ref GitHubAccessToken
               RunOrder: 1
         - Name: Build
           Actions:
