@@ -62,11 +62,12 @@ Resources:
               ActionTypeId:
                 Category: Source
                 Owner: AWS
-                Provider: Github
+                Provider: GitHub
                 Version: 1
               OutputArtifacts:
                 - Name: SourceOutput
               Configuration:
+                Owner: !Sub "${AWS::AccountId}"
                 Repo: !Ref GitHubRepository
                 Branch: !Ref GitHubBranch
                 OAuthToken: !Ref GitHubAccessToken
@@ -168,3 +169,10 @@ Resources:
                   - ec2:DescribeSubnets
                   - ec2:DescribeVpcs
                 Resource: '*'
+
+Outputs:
+  PipelineUrl:
+    Description: URL da Pipeline criada
+    Value: !Sub "https://console.aws.amazon.com/codesuite/codepipeline/pipelines/${Pipeline}/view?region=${AWS::Region}"
+    Export:
+      Name: !Sub "${AWS::StackName}-PipelineUrl"
