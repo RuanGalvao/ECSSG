@@ -1,51 +1,55 @@
-name: Terraform AWS Workflow
+name: Terraform Deployment
 
 on:
+  push:
+    branches:
+      - develop
   workflow_dispatch:
-    # Inputs the workflow expects.
-    inputs:
-      tfpath:
-        description: 'TF File Path'     
-        required: false
-        default: 'aws_samples/create_ec2'
+    branches:
+      - develop
+
+permissions:
+  contents: read
+  issues: write
+
 jobs:
-  tf_code_check:
-    name: Terraform Validation and Build
+  aws-deploy:
     runs-on: ubuntu-latest
-
-    if:  ${{ inputs.tfpath }} 
     steps:
-    - uses: actions/checkout@v2.5.0
+      - name: Checkout Git Repository
+        uses: actions/checkout@v3.0.0
+        with:
+          fetch-depth: 0
 
+      - name: Configure AWS Credentials
+        uses: aws-actions/configure-aws-credentials@v1
+        with:
+          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          aws-region: us-east-1  # Adjust the region as per your AWS setup
 
-    - name: Configure AWS Credentials Action For GitHub Actions
-      uses: aws-actions/configure-aws-credentials@v1
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: us-west-2 
-    - name: Setup Terraform CLI
-      uses: hashicorp/setup-terraform@v2.0.2
+      - name: Setup Terraform
+        uses: hashicorp/setup-terraform@v1
+        with:
+          terraform_version: 1.5.7
 
-    - name: Terraform init, plan and apply
-      run: |
-        echo `pwd`
-        echo "tfpath ${{ github.event.inputs.tfpath }}"
-        echo "** Running Terraform Init**"
-        terraform init
+      - name: Terraform init and validate
+        run: |
+          terraform init
 
-        echo "** Running Terraform Validate**"
-        terraform validate
+      - name: Terraform plan
+        run: |
+          terraform plan
 
-        echo "** Running Terraform Plan**"
-        terraform plan
+      - uses: trstringer/manual-approval@v1
+        with:
+          secret: ${{ secrets.GH_ACCESS_TOKEN }}
+          approvers: laysauchoa
+          minimum-approvals: 1
+          issue-title: "Deploying v1.0.0 to prod"
+          issue-body: "Review the terraform plan, then approve or deny the deployment of v1.0.0 to prod."
+          exclude-workflow-initiator-as-approver: false
 
-#        echo "** Running Terraform Apply**"
-#        terraform apply -auto-approve
-      working-directory: ${{ github.event.inputs.tfpath }}
-    - name: Terraform Destroy
-      run: |
-        echo "** Running Terraform Destroy**"
-        terraform plan -destroy
-#        terraform destroy -auto-approve
-      working-directory: ${{ github.event.inputs.tfpath }}
+      - name: Terraform apply
+        run: |
+          terraform apply --auto-approve
