@@ -8,7 +8,7 @@ variable "sg_example" {
 }
 variable "vpc_id" {
   type = string
-  default = "abc-123"
+
 }
 
 
