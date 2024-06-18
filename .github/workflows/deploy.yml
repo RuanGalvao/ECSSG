@@ -40,13 +40,6 @@ jobs:
       - name: Terraform plan
         run: |
           terraform plan
-      - name: Debug Terraform Plan
-        run: |
-          echo "Starting Terraform Plan..."
-          terraform --version
-          terraform init
-          terraform plan
-          echo "Terraform Plan completed."
 
       - name: Terraform apply
         run: |
