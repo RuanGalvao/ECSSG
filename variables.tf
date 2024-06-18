@@ -2,8 +2,8 @@ variable "description" {
   type = string
   default = "value"
 }
-variable "enviroment" {
-}
+# variable "enviroment" {
+# }
 
 variable "sg_example" {
   type = string
